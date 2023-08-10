@@ -60,19 +60,23 @@ def change():
     elif count > 1:
         for i in range(count):
             print(f'{i+1}.[{result[i]}]')
-        new_search = int(input("Уточните какой контакт хотите изменить?: "))
-        if new_search > 0 and count+1 > new_search:
-            print(f'Изменяем [{result[new_search-1]}]')
-            start = int(result[new_search-1].split()[0])
-        else:
-                print("Указано неверноe значение для редактирования")            
-    note = input("Введите текст заметки:")
-    all_data[start-1] = str(f'{all_data[start-1].split()[0]} {note} {datetime.datetime.today()}')
-    with open(file_base, 'w', encoding='utf-8') as f:
-        for i in range(len(all_data)):
-            with open(file_base, 'a', encoding='utf-8') as f:
-                f.write(f'{all_data[i]}\n') 
-        print(f'Запись Изменена!')
+        while True:
+            new_search = int(input("Уточните какой контакт хотите изменить?: "))
+            if new_search > 0 and count+1 > new_search:
+                print(f'Изменяем [{result[new_search-1]}]')
+                start = int(result[new_search-1].split()[0])
+                break
+            else:
+                print("Указано неверноe значение для редактирования") 
+                continue
+
+        note = input("Введите текст заметки:")
+        all_data[start-1] = str(f'{all_data[start-1].split()[0]} {note} {datetime.datetime.today()}')
+        with open(file_base, 'w', encoding='utf-8') as f:
+            for i in range(len(all_data)):
+                with open(file_base, 'a', encoding='utf-8') as f:
+                    f.write(f'{all_data[i]}\n') 
+            print(f'Запись Изменена!')
 
 def delete_contact():
     '''Удаление контакта''' 
@@ -87,13 +91,16 @@ def delete_contact():
     elif count > 1:
         for i in range(count):
             print(f'{i+1}.[{result[i]}]')
-        new_search = int(input("Уточните какой контакт хотите удалить?: "))
-        if new_search > 0 and count+1 > new_search:
-            print(f'Удаляем [{result[new_search-1]}]')
-            start = int(result[new_search-1].split()[0])
-            del_func(start, all_data)
-        else:
-            print("Указано неверноe значение для удаления")                  
+        while True:
+            new_search = int(input("Уточните какой контакт хотите удалить?: "))
+            if new_search > 0 and count+1 > new_search:
+                print(f'Удаляем [{result[new_search-1]}]')
+                start = int(result[new_search-1].split()[0])
+                del_func(start, all_data)
+                break
+            else:
+                print("Указано неверноe значение для удаления") 
+                continue               
 
 def del_func(start: int, all_data: list):
     """удаление"""        
